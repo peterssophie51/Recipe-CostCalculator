@@ -20,6 +20,7 @@ def int_check(item, min_range, max_range ):
 
 
 
+
     if is_valid == "yes":
         return chosen
     else:
@@ -30,7 +31,12 @@ def int_check(item, min_range, max_range ):
 
 check_num = "invalid choice"
 while check_num == "invalid choice":
-    number = int(input("Enter a number : "))
+    while True:
+        try:
+            number = float(input("Enter a number : "))
+            break
+        except:
+            print("Sorry, this must be a number")
     check_num = int_check(number, 0, 1000)
 
 
