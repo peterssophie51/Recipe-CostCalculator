@@ -1,6 +1,7 @@
-#set up int checker function
-def int_check(item, min_range, max_range ):
+#set up float checker function
+def float_check(item, min_range, max_range):
     #set variabes
+
     is_valid = ""
     chosen = ""
     #set variabes
@@ -14,7 +15,7 @@ def int_check(item, min_range, max_range ):
         is_valid = "yes"
         # if item is blank, show error (& repeat loop)
     elif item < 1:
-        print("Sorry, this value has to be a positive integer")
+        print("Sorry, this value has to be a positive number")
     else:
         print("Sorry, this is not a valid number!")
 
@@ -37,7 +38,7 @@ while check_num == "invalid choice":
             break
         except:
             print("Sorry, this must be a number")
-    check_num = int_check(number, 0, 1000)
+    check_num = float_check(number, 0, 1000)
 
 
 
