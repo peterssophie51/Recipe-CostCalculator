@@ -41,6 +41,42 @@ def string_checker(item, checker, options):
     else:
         return "invalid choice"
 
+#float checker function
+def float_check(item, min_range, max_range, checker):
+    #set variabes
+
+    is_valid = ""
+    chosen = ""
+    #set variabes
+    is_valid = ""
+    chosen = ""
+    if checker == "range":
+        #running the string checker when not checking a string is in a list
+        # if item is not blank, program continues
+        if item > min_range and item <= max_range:
+            chosen = "valid"
+            is_valid = "yes"
+            # if item is blank, show error (& repeat loop)
+        elif item < 1:
+            print("Sorry, this value has to be a positive number")
+        else:
+            print("Sorry, this is not a valid number!")
+    elif checker == "negative":
+        if item > 0:
+            is_valid = "yes"
+        elif item < 1:
+            print("Sorry, this value has to be a positive number")
+        else:
+            print("Sorry this is not a valid number!")
+
+
+
+
+    if is_valid == "yes":
+        return chosen
+    else:
+        return "invalid choice"
+
 
 
 
@@ -61,8 +97,17 @@ while check_recipe == "invalid choice":
     recipe = input("What is the name of your recipe : ")
     check_recipe = string_checker(recipe, "not list", yes_no)
 
+
 #ask the user the serving size of the recipe
-serving_size = float(input("What is the serving size of your recipe, {} : ".format(recipe)))
+check_ss = "invalid choice"
+while check_ss == "invalid choice":
+    while True:
+        try:
+             serving_size = float(input("What is the serving size of your recipe, {} : ".format(recipe)))
+             break
+        except:
+            print("Sorry, this must be a number")
+    check_ss = float_check(serving_size, 0, 1000, "negative")
 
 #ask user for ingredient
 check_ingredient = "invalid choice"
@@ -77,5 +122,13 @@ amount_need = input("How much {} is needed in the recipe : ".format(ingredient))
 amount_purchase = input("How much {} did you purcharse : ".format(ingredient))
 
 #ask user how much item costed
-ingredient_cost = float(input("How much did {} cost : $".format(ingredient)))
+while check_ic == "invalid choice":
+    while True:
+        try:
+            ingredient_cost = float(input("How much did {} cost : $".format(ingredient)))
+            break
+        except:
+            print("Sorry, this must be a number")
+    check_ic = float_check(ingredient_cost, 0, 1000, "negative")
+
 
