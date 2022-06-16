@@ -121,6 +121,7 @@ amount_need = input("How much {} is needed in the recipe : ".format(ingredient))
 #ask user how much of item they purcharsed
 amount_purchase = input("How much {} did you purcharse : ".format(ingredient))
 
+check_ic = "invalid choice"
 #ask user how much item costed
 while check_ic == "invalid choice":
     while True:
