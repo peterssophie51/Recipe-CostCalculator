@@ -19,7 +19,9 @@ def float_check(item, min_range, max_range, checker):
         else:
             print("Sorry, this is not a valid number!")
     elif checker == "negative":
-        if item < 1:
+        if item > 0:
+            is_valid = "yes"
+        elif item < 1:
             print("Sorry, this value has to be a positive number")
         else:
             print("Sorry this is not a valid number!")
