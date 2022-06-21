@@ -116,24 +116,36 @@ while check_amount == "invalid choice":
 
         while amount_unit_check == "invalid choice" or amount_num_check == "invalid choice":
             amount = question()
-            amount_split = amount.split()
-            amount_num = amount_split[0]
-            amount_unit = amount_split[1]
+            while True:
+                try:
+                    amount_split = amount.split()
+                    amount_num = amount_split[0]
+                    amount_unit = amount_split[1]
+                    check_split = "no"
+                    break
+                except:
+                    print("Invalid input")
+                    check_amount = "invalid choice"
+                    while check_amount == "invalid choice":
+                        amount = input("Amount : ")
+                        check_amount = string_checker(amount, "not list", yes_no)
             amount_unit_check = string_checker(amount_unit, "list", units)
             amount_num_check = float_check(float(amount_num), 0, 1, "negative")
+
 
 
 amount_unit = amount_unit_check
 
 if amount_unit == "Kg":
     amount_num = int(amount_num)*1000
+    amount_unit = "G"
 elif amount_unit == "Tsp":
     amount_num = float(amount_num) * 4.2
-    amount_unit = "Grams"
+    amount_unit = "G"
 
 elif amount_unit == "Tbsp":
     amount_num = float(amount_num) * 14.8
-    amount_unit = "Grams"
+    amount_unit = "G"
 
 elif amount_unit == "L":
     amount_num = float(amount_num) * 1000
