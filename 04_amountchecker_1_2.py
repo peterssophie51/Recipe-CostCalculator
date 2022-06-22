@@ -138,7 +138,7 @@ while check_amount == "invalid choice":
 amount_unit = amount_unit_check
 
 if amount_unit == "Kg":
-    amount_num = int(amount_num)*1000
+    amount_num = float(amount_num)*1000
     amount_unit = "G"
 elif amount_unit == "Tsp":
     amount_num = float(amount_num) * 4.2
