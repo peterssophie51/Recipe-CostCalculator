@@ -102,6 +102,7 @@ while check_amount == "invalid choice":
                     amount_split = amount.split()
                     amount_num = amount_split[0]
                     amount_unit = amount_split[1]
+                    amount_num_check = float_check(float(amount_num), 0, 1, "negative")
                     check_split = "no"
                     break
                 except:
