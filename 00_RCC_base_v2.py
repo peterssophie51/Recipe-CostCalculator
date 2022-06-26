@@ -77,13 +77,75 @@ def float_check(item, min_range, max_range, checker):
     else:
         return "invalid choice"
 
-#question for amount checker code
-def question():
+def amount_checker(question):
     check_amount = "invalid choice"
     while check_amount == "invalid choice":
-        amount = input("Amount : ")
+        amount = input(question)
         check_amount = string_checker(amount, "not list", yes_no)
-    return amount
+
+        if check_amount != "invalid choice":
+            check_split = "invalid choice"
+            while check_split == "invalid choice":
+                while True:
+                    try:
+                        amount_split = amount.split()
+                        amount_num = int(amount_split[0])
+                        amount_unit = amount_split[1]
+                        check_split = "no"
+                        break
+                    except:
+                        print("Invalid input")
+                        check_amount = "invalid choice"
+                        while check_amount == "invalid choice":
+                            amount = input("Amount : ")
+                            check_amount = string_checker(amount, "not list", yes_no)
+
+
+            amount_unit_check = string_checker(amount_unit, "list", units)
+            amount_num_check = float_check(float(amount_num), 0, 1, "negative")
+
+            while amount_unit_check == "invalid choice" or amount_num_check == "invalid choice":
+                check_amount = "invalid choice"
+                while check_amount == "invalid choice":
+                    amount = input("Amount : ")
+                    check_amount = string_checker(amount, "not list", yes_no)
+                while True:
+                    try:
+                        amount_split = amount.split()
+                        amount_num = int(amount_split[0])
+                        amount_unit = amount_split[1]
+                        check_split = "no"
+                        break
+                    except:
+                        print("Invalid input")
+                        check_amount = "invalid choice"
+                        while check_amount == "invalid choice":
+                            amount = input(question)
+                            check_amount = string_checker(amount, "not list", yes_no)
+
+                amount_unit_check = string_checker(amount_unit, "list", units)
+                amount_num_check = float_check(float(amount_num), 0, 1, "negative")
+
+
+
+    amount_unit = amount_unit_check
+
+    if amount_unit == "Kg":
+        amount_num = float(amount_num)*1000
+        amount_unit = "G"
+    elif amount_unit == "Tsp":
+        amount_num = float(amount_num) * 4.2
+        amount_unit = "G"
+
+    elif amount_unit == "Tbsp":
+        amount_num = float(amount_num) * 14.8
+        amount_unit = "G"
+
+    elif amount_unit == "L":
+        amount_num = float(amount_num) * 1000
+        amount_unit = "Ml"
+
+    return amount_num, amount_unit
 
 
 
@@ -126,11 +188,11 @@ while check_ingredient == "invalid choice":
     check_ingredient = string_checker(ingredient, "not list", yes_no)
 
 #ask user how much of ingredient is needed
-check_an = "invalid choice"
-amount_need = input("How much {} is needed in the recipe : ".format(ingredient))
+amount_need_num, amount_need_unit = amount_checker("How much {} is needed in the recipe : ".format(ingredient))
 
 #ask user how much of item they purcharsed
 amount_purchase = input("How much {} did you purcharse : ".format(ingredient))
+amount_purch_num, amount_purch_unit = amount_checker("How much {} did you purchase : ".format(ingredient))
 
 check_ic = "invalid choice"
 #ask user how much item costed
