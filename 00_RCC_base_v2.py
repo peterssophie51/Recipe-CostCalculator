@@ -77,12 +77,22 @@ def float_check(item, min_range, max_range, checker):
     else:
         return "invalid choice"
 
+#question for amount checker code
+def question():
+    check_amount = "invalid choice"
+    while check_amount == "invalid choice":
+        amount = input("Amount : ")
+        check_amount = string_checker(amount, "not list", yes_no)
+    return amount
 
 
 
 
 #LISTS
 yes_no = [["yes", "y"], ["no", "n"]]
+units = [["kg", "kilograms", "kilogram", "kgs"], ["g", "grams", "gram", "gs"], ["ml", "millilitres","mls"],
+         ["tsp", "teaspoon", "tsps", "teaspoons"], ["tbsp", "tablespoon", "tablespoons"],["cups", "cup"],
+         ["l", "litre", "litres"]]
 
 
 
@@ -116,6 +126,7 @@ while check_ingredient == "invalid choice":
     check_ingredient = string_checker(ingredient, "not list", yes_no)
 
 #ask user how much of ingredient is needed
+check_an = "invalid choice"
 amount_need = input("How much {} is needed in the recipe : ".format(ingredient))
 
 #ask user how much of item they purcharsed

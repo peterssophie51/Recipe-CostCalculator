@@ -1,4 +1,5 @@
-import re
+
+
 def string_checker(item, checker, options):
     #set variabes
     is_valid = ""
@@ -87,72 +88,76 @@ units = [["kg", "kilograms", "kilogram", "kgs"], ["g", "grams", "gram", "gs"], [
          ["tsp", "teaspoon", "tsps", "teaspoons"], ["tbsp", "tablespoon", "tablespoons"],["cups", "cup"],
          ["l", "litre", "litres"]]
 
-number_regex = "^[1-9]"
+def amount_checker():
+    check_amount = "invalid choice"
+    while check_amount == "invalid choice":
+        amount = input("Amount : ")
+        check_amount = string_checker(amount, "not list", yes_no)
 
-check_amount = "invalid choice"
-while check_amount == "invalid choice":
-    amount = input("Amount : ")
-    check_amount = string_checker(amount, "not list", yes_no)
+        if check_amount != "invalid choice":
+            check_split = "invalid choice"
+            while check_split == "invalid choice":
+                while True:
+                    try:
+                        amount_split = amount.split()
+                        amount_num = amount_split[0]
+                        amount_unit = amount_split[1]
+                        amount_num_check = float_check(float(amount_num), 0, 1, "negative")
+                        check_split = "no"
+                        break
+                    except:
+                        print("Invalid input")
+                        check_amount = "invalid choice"
+                        while check_amount == "invalid choice":
+                            amount = input("Amount : ")
+                            check_amount = string_checker(amount, "not list", yes_no)
 
-    if check_amount != "invalid choice":
-        check_split = "invalid choice"
-        while check_split == "invalid choice":
-            while True:
-                try:
-                    amount_split = amount.split()
-                    amount_num = amount_split[0]
-                    amount_unit = amount_split[1]
-                    amount_num_check = float_check(float(amount_num), 0, 1, "negative")
-                    check_split = "no"
-                    break
-                except:
-                    print("Invalid input")
-                    check_amount = "invalid choice"
-                    while check_amount == "invalid choice":
-                        amount = input("Amount : ")
-                        check_amount = string_checker(amount, "not list", yes_no)
-
-        amount_unit_check = string_checker(amount_unit, "list", units)
-        amount_num_check = float_check(float(amount_num), 0, 1, "negative")
-
-        while amount_unit_check == "invalid choice" or amount_num_check == "invalid choice":
-            amount = question()
-            while True:
-                try:
-                    amount_split = amount.split()
-                    amount_num = amount_split[0]
-                    amount_unit = amount_split[1]
-                    check_split = "no"
-                    break
-                except:
-                    print("Invalid input")
-                    check_amount = "invalid choice"
-                    while check_amount == "invalid choice":
-                        amount = input("Amount : ")
-                        check_amount = string_checker(amount, "not list", yes_no)
-                        
             amount_unit_check = string_checker(amount_unit, "list", units)
             amount_num_check = float_check(float(amount_num), 0, 1, "negative")
 
+            while amount_unit_check == "invalid choice" or amount_num_check == "invalid choice":
+                amount = question()
+                while True:
+                    try:
+                        amount_split = amount.split()
+                        amount_num = amount_split[0]
+                        amount_unit = amount_split[1]
+                        check_split = "no"
+                        break
+                    except:
+                        print("Invalid input")
+                        check_amount = "invalid choice"
+                        while check_amount == "invalid choice":
+                            amount = input("Amount : ")
+                            check_amount = string_checker(amount, "not list", yes_no)
+
+                amount_unit_check = string_checker(amount_unit, "list", units)
+                amount_num_check = float_check(float(amount_num), 0, 1, "negative")
 
 
-amount_unit = amount_unit_check
 
-if amount_unit == "Kg":
-    amount_num = float(amount_num)*1000
-    amount_unit = "G"
-elif amount_unit == "Tsp":
-    amount_num = float(amount_num) * 4.2
-    amount_unit = "G"
+    amount_unit = amount_unit_check
 
-elif amount_unit == "Tbsp":
-    amount_num = float(amount_num) * 14.8
-    amount_unit = "G"
+    if amount_unit == "Kg":
+        amount_num = float(amount_num)*1000
+        amount_unit = "G"
+    elif amount_unit == "Tsp":
+        amount_num = float(amount_num) * 4.2
+        amount_unit = "G"
 
-elif amount_unit == "L":
-    amount_num = float(amount_num) * 1000
-    amount_unit = "Ml"
+    elif amount_unit == "Tbsp":
+        amount_num = float(amount_num) * 14.8
+        amount_unit = "G"
+
+    elif amount_unit == "L":
+        amount_num = float(amount_num) * 1000
+        amount_unit = "Ml"
+
+    return amount_num, amount_unit
 
 
 
-print(amount_num, amount_unit)
+number, unit = amount_checker()
+
+print(number)
+print(unit)

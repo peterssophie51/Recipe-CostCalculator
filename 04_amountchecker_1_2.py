@@ -1,4 +1,4 @@
-import re
+
 def string_checker(item, checker, options):
     #set variabes
     is_valid = ""
@@ -86,8 +86,6 @@ yes_no = [["yes", "y"], ["no", "n"]]
 units = [["kg", "kilograms", "kilogram", "kgs"], ["g", "grams", "gram", "gs"], ["ml", "millilitres","mls"],
          ["tsp", "teaspoon", "tsps", "teaspoons"], ["tbsp", "tablespoon", "tablespoons"],["cups", "cup"],
          ["l", "litre", "litres"]]
-
-number_regex = "^[1-9]"
 
 check_amount = "invalid choice"
 while check_amount == "invalid choice":
