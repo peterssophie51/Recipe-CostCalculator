@@ -130,7 +130,7 @@ while check_amount == "invalid choice":
                     while check_amount == "invalid choice":
                         amount = input("Amount : ")
                         check_amount = string_checker(amount, "not list", yes_no)
-
+                        
             amount_unit_check = string_checker(amount_unit, "list", units)
             amount_num_check = float_check(float(amount_num), 0, 1, "negative")
 
