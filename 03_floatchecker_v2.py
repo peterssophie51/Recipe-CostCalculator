@@ -30,6 +30,7 @@ def float_check(item, min_range, max_range, checker):
 
 
     if is_valid == "yes":
+        chosen = item
         return chosen
     else:
         return "invalid choice"
@@ -46,6 +47,7 @@ while check_num == "invalid choice":
         except:
             print("Sorry, this must be a number")
     check_num = float_check(number, 0, 1000, "range")
+    print (check_num)
 
 
 check_num2 = "invalid choice"
@@ -57,7 +59,7 @@ while check_num2 == "invalid choice":
         except:
             print("Sorry, this must be a number")
     check_num2 = float_check(number2, 0, 1000, "negative")
-
+    print(check_num2)
 
 
 
