@@ -1,5 +1,6 @@
+#import fractions module
 from fractions import Fraction
-valid = "no"
+
 def float_check(item, min_range, max_range, checker):
     #set variabes
 
@@ -82,19 +83,23 @@ def fractions(x, units):
 
     for item in characters:
         if item.isdigit() == True:
+            #check whether item is a mixed fraction (if one split value is just a number)
             num = item
             mixed_frac = "yes"
 
         for character in item:
             if character == "/":
                 fraction = item
+
+    #convert fraction to decimal
     try:
         fraction = float(sum(Fraction(term) for term in fraction.split()))
+    #error handlign for if this cannot be done
     except:
         print("Sorry this is an invalid input")
         valid = "no"
 
-
+    #converting decimal value to grams
     if mixed_frac == "yes":
         fraction = fraction + int(num)
     if valid != "no":
@@ -128,18 +133,22 @@ def fractions(x, units):
                 print('Sorry this amount must be positive!')
                 valid = "no"
 
+    #return values
     return fraction, units, valid
-
 def amount_checker(item):
+    #set variavles
     amount = ""
     fraction = "no"
     unit = ""
+
+    #check each character
     for character in item:
         if character.isalpha() == True:
             unit = unit + character
         elif character.isdigit() == True:
             amount = amount + character
         elif character == "/":
+            #determine that the input is a fraction
             amount = amount + character
             fraction = "yes"
         else:
@@ -147,11 +156,14 @@ def amount_checker(item):
 
     valid = "yes"
 
+    #check unit is valid
     unit = string_checker(unit, "list", units, "Sorry, that is an invalid unit")
 
     try:
+        #check amount is valid number (not negative or 0)
         amount = float_check(float(amount), 1, 2, "negative",)
     except:
+        #error handling for this
         if fraction != "yes":
             print("Please enter a valid number")
             valid = "no"
@@ -161,7 +173,7 @@ def amount_checker(item):
         valid = "no"
 
 
-
+    #converting units, if the string is said to be valid
     if valid != "no":
         if fraction == "yes" and unit != "Eggs":
             amount, unit, valid = fractions(amount, unit)
@@ -205,15 +217,24 @@ def amount_checker(item):
                 valid = "no"
 
 
-
+    #return values
     return amount, unit, valid
 
+#set up all of the valid units in a list
 units = [["kg", "kilograms", "kilogram", "kgs"], ["g", "grams", "gram", "gs"], ["ml", "millilitres", "mls"],
         ["tsp" , "teaspoon", "tsps", "teaspoons"], ["tbsp", "tablespoon", "tablespoons"], ["cups", "cup"],
         ["l", "litre", "litres"], ["eggs", "egg"]]
+
+#set valid to no, so that the loop will run
 valid = "no"
+
 while valid == "no":
+    #ask for input
     x = input("Amount : ")
+    #return amount, unit (which should be either grams or mls) and whether the input was valid or not
+    #code will keep looping for a valid input if valid is returned as "no"
     amount, unit, valid = amount_checker(x)
+
+#print both variables, so that i know all inputs have been converted correctly
 print(amount)
 print(unit)
