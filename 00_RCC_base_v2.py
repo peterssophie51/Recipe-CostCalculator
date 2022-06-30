@@ -1,6 +1,9 @@
+#IMPORTING MODULES
+from fractions import Fraction
+
 #FUNCTIONS
 #string checker function
-def string_checker(item, checker, options):
+def string_checker(item, checker, options, error):
     #set variabes
     is_valid = ""
     chosen = ""
@@ -21,7 +24,7 @@ def string_checker(item, checker, options):
         for option in options:
 
             # if the item is in one of the lists, return the full name of the item
-            if item in option:
+            if item.lower() in option:
 
                 # get full name of item and put it in title
                 chosen = option[0].title()
@@ -33,7 +36,7 @@ def string_checker(item, checker, options):
                 is_valid = "no"
 
         if is_valid != "yes":
-            print("Please enter a valid option")
+            print(error)
 
         # if the snack is not OK - ask question again.
     if is_valid == "yes":
@@ -45,7 +48,6 @@ def string_checker(item, checker, options):
 def float_check(item, min_range, max_range, checker):
     #set variabes
 
-    is_valid = ""
     chosen = ""
     #set variabes
     is_valid = ""
@@ -64,6 +66,7 @@ def float_check(item, min_range, max_range, checker):
     elif checker == "negative":
         if item > 0:
             is_valid = "yes"
+
         elif item < 1:
             print("Sorry, this value has to be a positive number")
         else:
@@ -73,88 +76,167 @@ def float_check(item, min_range, max_range, checker):
 
 
     if is_valid == "yes":
+        chosen = item
         return chosen
     else:
         return "invalid choice"
 
-def amount_checker(question):
-    check_amount = "invalid choice"
-    while check_amount == "invalid choice":
-        amount = input(question)
-        check_amount = string_checker(amount, "not list", yes_no)
+#fraction checker function
+def fractions(x, units):
+    characters = x.split()
+    mixed_frac = "no"
+    valid ="yes"
 
-        if check_amount != "invalid choice":
-            check_split = "invalid choice"
-            while check_split == "invalid choice":
-                while True:
-                    try:
-                        amount_split = amount.split()
-                        amount_num = int(amount_split[0])
-                        amount_unit = amount_split[1]
-                        check_split = "no"
-                        break
-                    except:
-                        print("Invalid input")
-                        check_amount = "invalid choice"
-                        while check_amount == "invalid choice":
-                            amount = input("Amount : ")
-                            check_amount = string_checker(amount, "not list", yes_no)
+    for item in characters:
+        if item.isdigit() == True:
+            #check whether item is a mixed fraction (if one split value is just a number)
+            num = item
+            mixed_frac = "yes"
+
+        for character in item:
+            if character == "/":
+                fraction = item
+
+    #convert fraction to decimal
+    try:
+        fraction = float(sum(Fraction(term) for term in fraction.split()))
+    #error handlign for if this cannot be done
+    except:
+        print("Sorry this is an invalid input")
+        valid = "no"
+
+    #converting decimal value to grams
+    if mixed_frac == "yes":
+        fraction = fraction + int(num)
+    if valid != "no":
+        if units == "Cups":
+            fraction = float(fraction) * 128
+            units = "G"
+            valid = "yes"
+
+        elif units == "Kg":
+            fraction = float(fraction) * 1000
+            units = "G"
+            valid = "yes"
+
+        elif units == "L":
+            fraction = float(fraction) * 1000
+            units = "Ml"
+            valid = "yes"
+
+        elif units == "Tsp":
+            fraction = float(fraction) * 4.2
+            units = "G"
+            valid = "yes"
+
+        elif units == "Tbsp":
+            fraction = float(fraction) * 14.85
+            units = "G"
+            valid = "yes"
+
+        if mixed_frac != "yes":
+            if fraction < 1:
+                print('Sorry this amount must be positive!')
+                valid = "no"
+
+    #return values
+    return fraction, units, valid
+
+#amount checker function
+def amount_checker(item):
+    #set variavles
+    amount = ""
+    fraction = "no"
+    unit = ""
+
+    #check each character
+    for character in item:
+        if character.isalpha() == True:
+            unit = unit + character
+        elif character.isdigit() == True:
+            amount = amount + character
+        elif character == "/":
+            #determine that the input is a fraction
+            amount = amount + character
+            fraction = "yes"
+        else:
+            amount = amount + character
+
+    valid = "yes"
+
+    #check unit is valid
+    unit = string_checker(unit, "list", units, "Sorry, that is an invalid unit")
+
+    try:
+        #check amount is valid number (not negative or 0)
+        amount = float_check(float(amount), 1, 2, "negative",)
+    except:
+        #error handling for this
+        if fraction != "yes":
+            print("Please enter a valid number")
+            valid = "no"
+    if unit == "invalid choice":
+        valid = "no"
+    elif amount == "invalid choice":
+        valid = "no"
 
 
-            amount_unit_check = string_checker(amount_unit, "list", units)
-            amount_num_check = float_check(float(amount_num), 0, 1, "negative")
+    #converting units, if the string is said to be valid
+    if valid != "no":
+        if fraction == "yes" and unit != "Eggs":
+            amount, unit, valid = fractions(amount, unit)
 
-            while amount_unit_check == "invalid choice" or amount_num_check == "invalid choice":
-                check_amount = "invalid choice"
-                while check_amount == "invalid choice":
-                    amount = input("Amount : ")
-                    check_amount = string_checker(amount, "not list", yes_no)
-                while True:
-                    try:
-                        amount_split = amount.split()
-                        amount_num = int(amount_split[0])
-                        amount_unit = amount_split[1]
-                        check_split = "no"
-                        break
-                    except:
-                        print("Invalid input")
-                        check_amount = "invalid choice"
-                        while check_amount == "invalid choice":
-                            amount = input(question)
-                            check_amount = string_checker(amount, "not list", yes_no)
+        elif unit == "Eggs":
+            if fraction == "yes":
+                print("Sorry, we don't allow fractions for amounts of eggs. Try rounding this number up!")
+                valid = "no"
+            if amount == 1:
+                unit = "Egg"
 
-                amount_unit_check = string_checker(amount_unit, "list", units)
-                amount_num_check = float_check(float(amount_num), 0, 1, "negative")
+        elif unit == "Kg":
+            amount = float(amount) * 1000
+            valid = "yes"
+            unit = "G"
+        elif unit == "L":
+            amount = float(amount) * 1000
+            unit = "Ml"
+            valid = "yes"
+        elif unit == "Tsp":
+            amount = float(amount) * 4.2
+            unit = "G"
+            valid = "yes"
+        elif unit == "Tbsp":
+            amount = float(amount) * 14.8
+            valid = "yes"
+            unit = "G"
+        elif unit == "Cups":
+            amount = float(amount) * 128
+            valid = "yes"
+            unit = "G"
+        elif unit == "G":
+            amount = amount
+            valid = "yes"
+        else:
+            valid = "no"
+
+        if valid != "no":
+            if float(amount) < 1 and fraction != "yes":
+                print('Sorry this must be a positive number!')
+                valid = "no"
 
 
+    #return values
+    return amount, unit, valid
 
-    amount_unit = amount_unit_check
-
-    if amount_unit == "Kg":
-        amount_num = float(amount_num)*1000
-        amount_unit = "G"
-    elif amount_unit == "Tsp":
-        amount_num = float(amount_num) * 4.2
-        amount_unit = "G"
-
-    elif amount_unit == "Tbsp":
-        amount_num = float(amount_num) * 14.8
-        amount_unit = "G"
-
-    elif amount_unit == "L":
-        amount_num = float(amount_num) * 1000
-        amount_unit = "Ml"
-
-    return amount_num, amount_unit
 
 
 
 
 #LISTS
 yes_no = [["yes", "y"], ["no", "n"]]
-units = [["kg", "kilograms", "kilogram", "kgs"], ["g", "grams", "gram", "gs"], ["ml", "millilitres","mls"],
-         ["tsp", "teaspoon", "tsps", "teaspoons"], ["tbsp", "tablespoon", "tablespoons"],["cups", "cup"],
-         ["l", "litre", "litres"]]
+units = [["kg", "kilograms", "kilogram", "kgs"], ["g", "grams", "gram", "gs"], ["ml", "millilitres", "mls"],
+        ["tsp" , "teaspoon", "tsps", "teaspoons"], ["tbsp", "tablespoon", "tablespoons"], ["cups", "cup"],
+        ["l", "litre", "litres"], ["eggs", "egg"]]
 
 
 
@@ -167,7 +249,7 @@ print("Welcome to the Recipe Cost Calculator code :)")
 check_recipe = "invalid choice"
 while check_recipe == "invalid choice":
     recipe = input("What is the name of your recipe : ")
-    check_recipe = string_checker(recipe, "not list", yes_no)
+    check_recipe = string_checker(recipe, "not list", yes_no, "Please enter a string input!")
 
 
 #ask the user the serving size of the recipe
@@ -185,14 +267,23 @@ while check_ss == "invalid choice":
 check_ingredient = "invalid choice"
 while check_ingredient == "invalid choice":
     ingredient = input("Enter an ingredient needed : ")
-    check_ingredient = string_checker(ingredient, "not list", yes_no)
+    check_ingredient = string_checker(ingredient, "not list", yes_no, "Please enter a string input!")
 
 #ask user how much of ingredient is needed
-amount_need_num, amount_need_unit = amount_checker("How much {} is needed in the recipe : ".format(ingredient))
+valid = "no"
+while valid == "no":
+    amount_need = input("How much {} is needed in the recipe : ".format(ingredient))
+    amount_need, an_unit, valid = amount_checker(amount_need)
+    print(amount_need)
+    print(an_unit)
 
 #ask user how much of item they purcharsed
-amount_purchase = input("How much {} did you purcharse : ".format(ingredient))
-amount_purch_num, amount_purch_unit = amount_checker("How much {} did you purchase : ".format(ingredient))
+valid = "no"
+while valid == "no":
+    amount_purchase = input("How much {} did you purcharse : ".format(ingredient))
+    amount_purchase, ap_unit, valid = amount_checker(amount_purchase)
+    print(amount_purchase)
+    print(ap_unit)
 
 check_ic = "invalid choice"
 #ask user how much item costed
