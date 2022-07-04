@@ -264,33 +264,43 @@ while check_ss == "invalid choice":
             print("Sorry, this must be a number")
     check_ss = float_check(serving_size, 0, 1000, "negative")
 
-#ask user for ingredient
-check_ingredient = "invalid choice"
-while check_ingredient == "invalid choice":
-    ingredient = input("Enter an ingredient needed : ")
-    check_ingredient = string_checker(ingredient, "not list", yes_no, "Please enter a string input!")
+ingredient = "yes"
+while ingredient != "xxx":
+    #ask user for ingredient
+    check_ingredient = "invalid choice"
+    while check_ingredient == "invalid choice":
+        ingredient = input("Enter an ingredient needed : ")
+        check_ingredient = string_checker(ingredient, "not list", yes_no, "Please enter a string input!")
 
-#ask user how much of ingredient is needed
-valid = "no"
-while valid == "no":
-    amount_need = input("How much {} is needed in the recipe : ".format(ingredient))
-    amount_need, an_unit, valid = amount_checker(amount_need)
+    if ingredient == "xxx":
+        break
 
-#ask user how much of item they purcharsed
-valid = "no"
-while valid == "no":
-    amount_purchase = input("How much {} did you purcharse : ".format(ingredient))
-    amount_purchase, ap_unit, valid = amount_checker(amount_purchase)
 
-check_ic = "invalid choice"
-#ask user how much item costed
-while check_ic == "invalid choice":
-    while True:
-        try:
-            ingredient_cost = float(input("How much did {} cost : $".format(ingredient)))
-            break
-        except:
-            print("Sorry, this must be a number")
-    check_ic = float_check(ingredient_cost, 0, 1000, "negative")
+    #ask user how much of ingredient is needed
+    valid = "no"
+    while valid == "no":
+        amount_need = input("How much {} is needed in the recipe : ".format(ingredient))
+        amount_need, an_unit, valid = amount_checker(amount_need)
+
+
+    #ask user how much of item they purcharsed
+    valid = "no"
+    while valid == "no":
+        amount_purchase = input("How much {} did you purcharse : ".format(ingredient))
+        amount_purchase, ap_unit, valid = amount_checker(amount_purchase)
+
+    check_ic = "invalid choice"
+    #ask user how much item costed
+    while check_ic == "invalid choice":
+        while True:
+            try:
+                ingredient_cost = float(input("How much did {} cost : $".format(ingredient)))
+                print(ingredient_cost)
+                break
+            except:
+                print(ingredient_cost)
+                print("Sorry, this must be a number")
+        check_ic = float_check(ingredient_cost, 0, 1000, "negative")
+
 
 
