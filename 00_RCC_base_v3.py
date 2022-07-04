@@ -295,10 +295,8 @@ while ingredient != "xxx":
         while True:
             try:
                 ingredient_cost = float(input("How much did {} cost : $".format(ingredient)))
-                print(ingredient_cost)
                 break
             except:
-                print(ingredient_cost)
                 print("Sorry, this must be a number")
         check_ic = float_check(ingredient_cost, 0, 1000, "negative")
 
