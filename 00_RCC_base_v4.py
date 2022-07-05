@@ -108,33 +108,35 @@ def fractions(x, units):
         print("Sorry this is an invalid input")
         valid = "no"
 
+    new_units = "g"
+
     #converting decimal value to grams
     if mixed_frac == "yes":
         fraction = fraction + int(num)
     if valid != "no":
         if units == "Cups":
             fraction = float(fraction) * 128
-            units = "G"
+            new_units = "G"
             valid = "yes"
 
         elif units == "Kg":
             fraction = float(fraction) * 1000
-            units = "G"
+            new_units = "G"
             valid = "yes"
 
         elif units == "L":
             fraction = float(fraction) * 1000
-            units = "Ml"
+            new_units = "Ml"
             valid = "yes"
 
         elif units == "Tsp":
             fraction = float(fraction) * 4.2
-            units = "G"
+            new_units = "G"
             valid = "yes"
 
         elif units == "Tbsp":
             fraction = float(fraction) * 14.85
-            units = "G"
+            new_units = "G"
             valid = "yes"
 
         if mixed_frac != "yes":
@@ -143,7 +145,7 @@ def fractions(x, units):
                 valid = "no"
 
     #return values
-    return fraction, units, valid
+    return fraction, new_units, valid
 
 #amount checker function
 def amount_checker(item):
@@ -183,41 +185,45 @@ def amount_checker(item):
     elif amount == "invalid choice":
         valid = "no"
 
-
+    new_unit = "a"
     #converting units, if the string is said to be valid
     if valid != "no":
         if fraction == "yes" and unit != "Eggs":
-            amount, unit, valid = fractions(amount, unit)
+            amount, new_unit, valid = fractions(amount, unit)
+
 
         elif unit == "Eggs":
             if fraction == "yes":
                 print("Sorry, we don't allow fractions for amounts of eggs. Try rounding this number up!")
                 valid = "no"
             if amount == 1:
-                unit = "Egg"
+                new_unit = "Egg"
 
         elif unit == "Kg":
             amount = float(amount) * 1000
             valid = "yes"
-            unit = "G"
+            new_unit = "G"
         elif unit == "L":
             amount = float(amount) * 1000
-            unit = "Ml"
+            new_unit = "Ml"
             valid = "yes"
         elif unit == "Tsp":
             amount = float(amount) * 4.2
-            unit = "G"
+            new_unit = "G"
             valid = "yes"
         elif unit == "Tbsp":
             amount = float(amount) * 14.8
             valid = "yes"
-            unit = "G"
+            new_unit = "G"
         elif unit == "Cups":
             amount = float(amount) * 128
             valid = "yes"
-            unit = "G"
+            new_unit = "G"
         elif unit == "G":
             amount = amount
+            valid = "yes"
+        elif unit == "Ml":
+            new_unit = "Ml"
             valid = "yes"
         else:
             valid = "no"
@@ -229,7 +235,7 @@ def amount_checker(item):
 
 
     #return values
-    return amount, unit, valid
+    return amount, unit, valid, new_unit
 
 
 
@@ -244,12 +250,16 @@ all_ingredients = []
 amounts_needed = []
 amounts_purchased = []
 prices = []
+an_units =[]
+ap_units = []
 
 #DICTIONARIES
 recipe_data_dict = {
     "Ingredient": all_ingredients,
     "Amount needed": amounts_needed,
+    "Unit": an_units,
     "Amount purchased": amounts_purchased,
+    "Units": ap_units,
     "Price": prices
 }
 
@@ -291,18 +301,20 @@ while ingredient != "xxx":
     valid = "no"
     while valid == "no":
         amount_need = input("How much {} is needed in the recipe : ".format(ingredient))
-        amount_need, an_unit, valid = amount_checker(amount_need)
+        amount_need, unit, valid, an_unit = amount_checker(amount_need)
 
     amounts_needed.append(amount_need)
+    an_units.append(unit)
 
 
     #ask user how much of item they purcharsed
     valid = "no"
     while valid == "no":
         amount_purchase = input("How much {} did you purcharse : ".format(ingredient))
-        amount_purchase, ap_unit, valid = amount_checker(amount_purchase)
+        amount_purchase, unit, valid, ap_unit = amount_checker(amount_purchase)
 
     amounts_purchased.append(amount_purchase)
+    ap_units.append(unit)
 
     check_ic = "invalid choice"
     #ask user how much item costed
