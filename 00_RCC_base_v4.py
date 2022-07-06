@@ -186,6 +186,9 @@ def amount_checker(item):
         valid = "no"
 
     new_unit = "a"
+
+    initial_amount = str(amount)
+
     #converting units, if the string is said to be valid
     if valid != "no":
         if fraction == "yes" and unit != "Eggs":
@@ -235,7 +238,7 @@ def amount_checker(item):
 
 
     #return values
-    return amount, unit, valid, new_unit
+    return initial_amount, unit, valid, new_unit, amount
 
 
 
@@ -250,16 +253,16 @@ all_ingredients = []
 amounts_needed = []
 amounts_purchased = []
 prices = []
-an_units =[]
-ap_units = []
+#an_units =[]
+#ap_units = []
 
 #DICTIONARIES
 recipe_data_dict = {
     "Ingredient": all_ingredients,
     "Amount needed": amounts_needed,
-    "Unit": an_units,
+    #"Unit": an_units,
     "Amount purchased": amounts_purchased,
-    "Units": ap_units,
+    #"Units": ap_units,
     "Price": prices
 }
 
@@ -301,20 +304,30 @@ while ingredient != "xxx":
     valid = "no"
     while valid == "no":
         amount_need = input("How much {} is needed in the recipe : ".format(ingredient))
-        amount_need, unit, valid, an_unit = amount_checker(amount_need)
+        amount_need, unit, valid, an_unit, an_amount = amount_checker(amount_need)
 
+    #amounts_needed.append(amount_need)
+    #an_units.append(unit)
+    amount_need_list = []
+    amount_need_list.append(amount_need)
+    amount_need_list.append(unit)
+    amount_need = " ".join(amount_need_list)
     amounts_needed.append(amount_need)
-    an_units.append(unit)
 
 
     #ask user how much of item they purcharsed
     valid = "no"
     while valid == "no":
         amount_purchase = input("How much {} did you purcharse : ".format(ingredient))
-        amount_purchase, unit, valid, ap_unit = amount_checker(amount_purchase)
+        amount_purchase, unit, valid, ap_unit, ap_amount = amount_checker(amount_purchase)
 
+    #amounts_purchased.append(amount_purchase)
+    #ap_units.append(unit)
+    amount_purchase_list = []
+    amount_purchase_list.append(amount_purchase)
+    amount_purchase_list.append(unit)
+    amount_purchase = " ".join(amount_purchase_list)
     amounts_purchased.append(amount_purchase)
-    ap_units.append(unit)
 
     check_ic = "invalid choice"
     #ask user how much item costed
