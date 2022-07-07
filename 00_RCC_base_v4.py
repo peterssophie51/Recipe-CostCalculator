@@ -253,6 +253,8 @@ all_ingredients = []
 amounts_needed = []
 amounts_purchased = []
 prices = []
+total_price = 0
+serving_price = 0
 #an_units =[]
 #ap_units = []
 
@@ -342,9 +344,16 @@ while ingredient != "xxx":
 
     prices.append(ingredient_cost)
 
+    ingredient_price = ingredient_cost / ap_amount
+    ingredient_price = an_amount * ingredient_price
+    print(ingredient_price)
+    total_price += ingredient_price
+
 
 
 recipe_frame = pandas.DataFrame(recipe_data_dict)
 recipe_frame = recipe_frame.set_index("Ingredient")
+serving_price = total_price / serving_size
+print("The price per serving is ${}".format(serving_price))
 print(recipe_frame)
 
