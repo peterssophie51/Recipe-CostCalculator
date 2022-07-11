@@ -257,15 +257,22 @@ total_price = 0
 serving_price = 0
 #an_units =[]
 #ap_units = []
+recipes = []
+serving = []
+total = []
 
 #DICTIONARIES
 recipe_data_dict = {
     "Ingredient": all_ingredients,
     "Amount needed": amounts_needed,
-    #"Unit": an_units,
     "Amount purchased": amounts_purchased,
-    #"Units": ap_units,
     "Price": prices
+}
+
+costs_dict = {
+    "": recipes,
+    "Serving" : serving,
+    "Total"   : total
 }
 
 
@@ -278,7 +285,7 @@ while check_recipe == "invalid choice":
     recipe = input("What is the name of your recipe : ")
     check_recipe = string_checker(recipe, "not list", yes_no, "Please enter a string input!")
 
-
+recipes.append(recipe)
 #ask the user the serving size of the recipe
 check_ss = "invalid choice"
 while check_ss == "invalid choice":
@@ -320,7 +327,7 @@ while ingredient != "xxx":
     #ask user how much of item they purcharsed
     valid = "no"
     while valid == "no":
-        amount_purchase = input("How much {} did you purcharse : ".format(ingredient))
+        amount_purchase = input("How much {} did you purchase : ".format(ingredient))
         amount_purchase, unit, valid, ap_unit, ap_amount = amount_checker(amount_purchase)
 
     #amounts_purchased.append(amount_purchase)
@@ -346,14 +353,25 @@ while ingredient != "xxx":
 
     ingredient_price = ingredient_cost / ap_amount
     ingredient_price = an_amount * ingredient_price
-    print(ingredient_price)
     total_price += ingredient_price
 
+
+serving_price = total_price / serving_size
+serving.append("{:.2f}".format(serving_price))
+total.append("{:.2f}".format(total_price))
 
 
 recipe_frame = pandas.DataFrame(recipe_data_dict)
 recipe_frame = recipe_frame.set_index("Ingredient")
-serving_price = total_price / serving_size
-print("The price per serving is ${}".format(serving_price))
+
+cost_frame = pandas.DataFrame(costs_dict)
+cost_frame = cost_frame.set_index("")
+
+
 print(recipe_frame)
+print()
+print()
+print(cost_frame)
+
+
 
