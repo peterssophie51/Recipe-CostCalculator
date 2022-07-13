@@ -406,7 +406,9 @@ while ingredient != "xxx":
             except:
                 print("Sorry, this must be a number")
         check_ic = float_check(ingredient_cost, 0, 1000, "negative")
-        space(2)
+
+
+        space(1)
 
 
 
