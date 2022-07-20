@@ -12,6 +12,7 @@ def fractions(x):
         for character in item:
             if character == "/":
                 fraction = item
+                mixed_frac = "no"
 
 
     print(characters)

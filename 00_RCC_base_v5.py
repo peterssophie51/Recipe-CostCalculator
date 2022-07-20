@@ -75,9 +75,6 @@ def float_check(item, min_range, max_range, checker):
         else:
             print("Sorry this is not a valid number!")
 
-
-
-
     if is_valid == "yes":
         chosen = item
         return chosen
@@ -259,8 +256,6 @@ amounts_purchased = []
 prices = []
 total_price = 0
 serving_price = 0
-#an_units =[]
-#ap_units = []
 recipes = []
 serving = []
 total = []
@@ -408,7 +403,7 @@ while ingredient != "xxx":
         check_ic = float_check(ingredient_cost, 0, 1000, "negative")
 
 
-        space(1)
+    space(1)
 
 
 
