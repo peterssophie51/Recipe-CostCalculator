@@ -278,11 +278,14 @@ costs_dict = {
 #welcome the user to the program
 print("Welcome to the Recipe Cost Calculator code :)")
 space(1)
+
+#ask the user whether they have used the program before
 check_use = "invalid choice"
 while check_use == "invalid choice":
     use_program = input("Have you used this program before : ")
     check_use = string_checker(use_program, "list", yes_no, "Please enter a valid input!")
 
+#print instructions if they haven't used instructions before
 if check_use == "No":
     print("The program you’re using is a simple, easy to use program, that will calculate both the total price\n"
           "and serving price for any recipe.")
@@ -407,18 +410,19 @@ while ingredient != "xxx":
 
 
 
-
+    #calculate all prices
     prices.append(ingredient_cost)
 
     ingredient_price = ingredient_cost / ap_amount
     ingredient_price = an_amount * ingredient_price
     total_price += ingredient_price
 
+#finish calculating prices and add them to lists
 serving_price = total_price / serving_size
 serving.append("{:.2f}".format(serving_price))
 total.append("{:.2f}".format(total_price))
 
-
+#print out all data
 recipe_frame = pandas.DataFrame(recipe_data_dict)
 recipe_frame = recipe_frame.set_index("Ingredient")
 
